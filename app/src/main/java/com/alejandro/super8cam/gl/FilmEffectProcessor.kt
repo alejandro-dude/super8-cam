@@ -14,6 +14,8 @@ import java.util.concurrent.Executor
 
 private const val TAG = "FilmEffectProcessor"
 private const val SIMULATED_FILM_FPS = 18.0f
+private const val FRAME_INTERVAL_NS = (1_000_000_000f / SIMULATED_FILM_FPS).toLong()
+private const val FRAME_SLACK_NS = 4_000_000L // tolerate camera frame jitter
 
 /**
  * Applies the Super-8 look (see [FilmShader]) to the live camera feed on its
@@ -36,6 +38,7 @@ class FilmEffectProcessor : SurfaceProcessor {
     private val finalTransform = FloatArray(16)
 
     private var startTimeNs = 0L
+    private var lastDrawNs = 0L
     private var glSetUp = false
 
     private class OutputTarget(
@@ -115,7 +118,14 @@ class FilmEffectProcessor : SurfaceProcessor {
 
         if (outputs.isEmpty()) return
 
-        val elapsedSeconds = (System.nanoTime() - startTimeNs) / 1_000_000_000f
+        // Real 8mm runs at ~18 fps: only pass a new frame through every
+        // 1/18 s and drop the rest. This gives the choppy film cadence in
+        // both the preview and the recorded video.
+        val nowNs = System.nanoTime()
+        if (lastDrawNs != 0L && nowNs - lastDrawNs < FRAME_INTERVAL_NS - FRAME_SLACK_NS) return
+        lastDrawNs = nowNs
+
+        val elapsedSeconds = (nowNs - startTimeNs) / 1_000_000_000f
         val frameSeed = kotlin.math.floor(elapsedSeconds * SIMULATED_FILM_FPS)
 
         for (target in outputs) {

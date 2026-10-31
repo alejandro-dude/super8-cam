@@ -73,9 +73,22 @@ class MainActivity : AppCompatActivity() {
         cameraController.start(this, binding.cameraPreview)
     }
 
+    private var startPending = false
+
+    // The click is played *outside* the recording window so the microphone
+    // never captures it: before the recording starts, or after it stops.
     private fun onShutterTapped() {
-        soundManager.playShutterClick()
-        cameraController.toggleRecording()
+        if (cameraController.isRecording()) {
+            cameraController.toggleRecording()
+            soundManager.playShutterClick()
+        } else if (!startPending) {
+            startPending = true
+            soundManager.playShutterClick()
+            uiHandler.postDelayed({
+                startPending = false
+                cameraController.toggleRecording()
+            }, 400)
+        }
     }
 
     private fun onRecordingStateChanged(recording: Boolean) {
@@ -84,13 +97,9 @@ class MainActivity : AppCompatActivity() {
         )
         binding.recIndicator.visibility = if (recording) View.VISIBLE else View.INVISIBLE
 
-        if (recording) {
-            soundManager.startWindLoop()
-            startCounter()
-        } else {
-            soundManager.stopWindLoop()
-            stopCounter()
-        }
+        // No sound is played while recording: anything played through the
+        // speaker would be picked up by the microphone and end up in the footage.
+        if (recording) startCounter() else stopCounter()
     }
 
     private fun startCounter() {
