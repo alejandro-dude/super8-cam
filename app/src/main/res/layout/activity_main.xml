@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/film_black">
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/camera_preview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:implementationMode="compatible"
+        app:scaleType="fillCenter"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/control_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.alejandro.super8cam.ui.FilmFrameOverlayView
+        android:id="@+id/film_frame"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="@id/camera_preview"
+        app:layout_constraintBottom_toBottomOf="@id/camera_preview"
+        app:layout_constraintStart_toStartOf="@id/camera_preview"
+        app:layout_constraintEnd_toEndOf="@id/camera_preview" />
+
+    <TextView
+        android:id="@+id/rec_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="28dp"
+        android:text="● REC"
+        android:textColor="@color/film_red"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintTop_toTopOf="@id/camera_preview"
+        app:layout_constraintStart_toStartOf="@id/camera_preview" />
+
+    <TextView
+        android:id="@+id/footage_counter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="28dp"
+        android:fontFamily="monospace"
+        android:text="0 ft 00"
+        android:textColor="@color/film_cream"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="@id/camera_preview"
+        app:layout_constraintEnd_toEndOf="@id/camera_preview" />
+
+    <LinearLayout
+        android:id="@+id/permission_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/film_black"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="32dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/permission_rationale"
+            android:textColor="@color/film_cream"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/grant_permission_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/grant_permission" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/control_bar"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:background="@color/film_black"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <View
+            android:id="@+id/shutter_button"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:background="@drawable/shutter_button_background"
+            android:contentDescription="@string/app_name" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

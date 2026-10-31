@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Super 8</string>
+    <string name="permission_rationale">Camera and microphone access are needed to record film.</string>
+    <string name="grant_permission">Grant access</string>
+</resources>

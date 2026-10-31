@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Default/idle state; MainActivity swaps this for shutter_recording while filming. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <stroke android:width="4dp" android:color="@color/film_cream" />
+            <solid android:color="#00000000" />
+        </shape>
+    </item>
+    <item android:width="56dp" android:height="56dp" android:gravity="center">
+        <shape android:shape="oval">
+            <solid android:color="@color/film_red" />
+        </shape>
+    </item>
+</layer-list>

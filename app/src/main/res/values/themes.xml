@@ -1,0 +1,12 @@
+<resources>
+    <style name="Theme.Super8Cam" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/film_amber</item>
+        <item name="android:windowBackground">@color/film_black</item>
+    </style>
+
+    <style name="Theme.Super8Cam.Fullscreen">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/film_black</item>
+    </style>
+</resources>
