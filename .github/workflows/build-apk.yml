@@ -24,7 +24,7 @@ jobs:
           echo "SDK_ROOT=$SDK_ROOT"
           ls -la "$SDK_ROOT" || true
           ls -la "$SDK_ROOT/cmdline-tools" || true
-          SDKMANAGER="$(find "$SDK_ROOT/cmdline-tools" -maxdepth 2 -iname sdkmanager -type f | sort | tail -1)"
+          SDKMANAGER="$(find "$SDK_ROOT/cmdline-tools" -maxdepth 3 -iname sdkmanager -type f | sort | tail -1)"
           echo "SDKMANAGER=$SDKMANAGER"
           test -n "$SDKMANAGER"
           yes | "$SDKMANAGER" --sdk_root="$SDK_ROOT" --licenses || true
